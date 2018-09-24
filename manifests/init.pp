@@ -1,7 +1,7 @@
-class postfix {
+class rspamd {
         
-	include postfix::install
-	include postfix::config
-	include postfix::service
+	include rspamd::install
+	include rspamd::config
+	include rspamd::service
 
 }
