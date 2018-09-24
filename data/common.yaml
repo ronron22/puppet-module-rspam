@@ -1,0 +1,7 @@
+---
+rspamd::service::service_name: 'rspamd'
+rspamd::service::service_enable: true
+rspamd::service::service_ensure: 'running'
+rspamd::service::service_manage: true
+
+rspamd::config::configuration_directory: '/etc/rspamd'

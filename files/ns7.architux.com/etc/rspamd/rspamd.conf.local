@@ -1,0 +1,51 @@
+multimap {
+    # ip - matches source IP of message (radix map)
+    # from - matches envelope from (or header From if envelope from is absent)
+    # rcpt - matches any of envelope rcpt or header To if envelope info is missing
+    # header - matches any header specified (must have header = "Header-Name" configuration attribute)
+    # dnsbl - matches source IP against some DNS blacklist (consider using RBL module for this)
+    local_bl_ip { type = "ip"; map = "$CONFDIR/local_bl_ip.map.inc"; symbol = "LOCAL_BL_IP"; description = "Local ip blacklist";}
+    local_bl_from { type = "from"; map = "$CONFDIR/local_bl_from.map.inc"; symbol = "LOCAL_BL_FROM"; description = "Local from blacklist";}
+    local_bl_rcpt { type = "rcpt"; map = "$CONFDIR/local_bl_rcpt.map.inc"; symbol = "LOCAL_BL_RCPT"; description = "Local rcpt blacklist";}
+    local_wl_ip { type = "ip"; map = "$CONFDIR/local_wl_ip.map.inc"; symbol = "LOCAL_WL_IP"; description = "Local ip whitelist";}
+    local_wl_from { type = "from"; map = "$CONFDIR/local_wl_from.map.inc"; symbol = "LOCAL_WL_FROM"; description = "Local from whitelist";}
+    local_wl_rcpt { type = "rcpt"; map = "$CONFDIR/local_wl_rcpt.map.inc"; symbol = "LOCAL_WL_RCPT"; description = "Local rcpt whitelist";}
+}
+
+metric {
+    name = "default";
+    group {
+        name = "local";
+        symbol {
+            weight = 3;
+            description = "Sender ip listed in local ip blacklist";
+            name = "LOCAL_BL_IP";
+        }
+        symbol {
+            weight = 3;
+            description = "Sender from listed in local from blacklist";
+            name = "LOCAL_BL_FROM";
+        }
+        symbol {
+            weight = 3;
+            description = "Recipient listed in local rcpt blacklist";
+            name = "LOCAL_BL_RCPT";
+        }
+        symbol {
+            weight = -5;
+            description = "Sender ip listed in local ip whitelist";
+            name = "LOCAL_WL_IP";
+        }
+        symbol {
+            weight = -5;
+            description = "Sender from listed in local from whitelist";
+            name = "LOCAL_WL_FROM";
+        }
+        symbol {
+            weight = -5;
+            description = "Recipient listed in local rcpt whitelist";
+            name = "LOCAL_WL_RCPT";
+        }
+    }
+
+}

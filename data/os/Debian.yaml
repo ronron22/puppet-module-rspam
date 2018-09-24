@@ -1,0 +1,4 @@
+---
+rspamd::install::rspamd_packages: 
+  - rspamd
+
